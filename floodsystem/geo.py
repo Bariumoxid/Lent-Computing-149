@@ -35,3 +35,6 @@ def stations_by_distance(stations, p):
 
     station_county_distance=sorted_by_key(station_county_distance, 1) #sort by distance
     return station_county_distance
+
+def stations_within_radius(stations, centre, r):
+    return [station for station in stations if haversine(station.coord,centre) < r]
