@@ -3,12 +3,22 @@ from floodsystem.geo import stations_by_distance
 
 def run():
     stations = build_station_list()
-    coordinates_list=[]
     stations_list=[]
+
+    station_name_to_town_dict={}
     for items in stations: #extract station names and coordinates
-        coordinates_list.append(items.coord)
         stations_list.append(items.name)
-    output=stations_by_distance(stations_list,coordinates_list)
+        station_name_to_town_dict[str(items.name)]=str(items.town)
+
+
+    coordinate=tuple((52.2053, 0.1218))
+    value=stations_by_distance(stations_list,coordinate)
+    output=[]
+    k=0
+    print(value[1][1])
+    for k in range (len(value)):
+        output.append((value[k][0],station_name_to_town_dict[str(value[k][0])],value[k][1]))
+        
     print(output[:10])
     print("--------")
     print(output[-10:])
