@@ -1,10 +1,7 @@
 from floodsystem.geo import stations_within_radius, stations_by_distance
 from floodsystem.station import MonitoringStation
 
-
-def test_stations_within_radius():
-    centre = (52.2053, 0.1218)
-    c = MonitoringStation(
+c = MonitoringStation(
                 station_id=1,
                 measure_id=1,
                 label='c',
@@ -12,8 +9,7 @@ def test_stations_within_radius():
                 typical_range=(1, 1),
                 river='aa',
                 town='aaa')
-
-    b = MonitoringStation(
+b = MonitoringStation(
                 station_id=1,
                 measure_id=1,
                 label='b',
@@ -21,8 +17,7 @@ def test_stations_within_radius():
                 typical_range=(1, 1),
                 river='aa',
                 town='aaa')
-
-    a = MonitoringStation(
+a = MonitoringStation(
                 station_id=1,
                 measure_id=1,
                 label='a',
@@ -30,6 +25,21 @@ def test_stations_within_radius():
                 typical_range=(1, 1),
                 river='aa',
                 town='aaa')
+
+def test_sort_station_by_distance(): #the pytest for Task1B
+
+
+    station_list_test=[a,b,c]
+    p = (52.2053, 0.1218)
+    print(stations_by_distance(station_list_test,p))
+    assert stations_by_distance(station_list_test,p)[0]==('a', 2.502277543239629)
+    assert stations_by_distance(station_list_test,p)[1]==('c', 7.265704342799649)
+    assert stations_by_distance(station_list_test,p)[2]==('b', 132.5410306597496)
+test_sort_station_by_distance()
+
+def test_stations_within_radius(): #the pytest for Task1C
+    centre = (52.2053, 0.1218)
+    
     print(set(stations_within_radius([c,b,a],centre,10)) == {a,c})
 
 test_stations_within_radius()
