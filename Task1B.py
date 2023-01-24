@@ -12,7 +12,6 @@ def run():
     coordinate=tuple((52.2053, 0.1218)) #the given coordinates
     value=stations_by_distance(stations,coordinate) #in the form (station, distance)
     output=[] #in form (station, town, distance)
-    print(value[1][0])
     k=0
     for k in range (len(value)):
         output.append((value[k][0],station_name_to_town_dict[str(value[k][0])],value[k][1]))

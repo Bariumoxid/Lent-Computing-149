@@ -7,7 +7,6 @@ geographical data.
 
 from .utils import sorted_by_key  # noqa
 from haversine import haversine, Unit #Package that can calculate dist by two geographic coordinates (latitude/longitude)
-from .stationdata import build_station_list
 
 
 def stations_by_distance(stations, p):
@@ -18,7 +17,6 @@ def stations_by_distance(stations, p):
         coordinate_to_name[str(items.coord)]=items.name #dict mapping coordinates to station name
 
     coord_list=[] #list of coordinates for input cities
-    #for i in range (len(stations)):
     for items in stations:
         coord_list.append(items.coord)
           
@@ -33,5 +31,23 @@ def stations_by_distance(stations, p):
     return station_county_distance
 
 def stations_within_radius(stations, centre, r):
-    print(stations)
     return [station for station in stations if haversine(station.coord,centre) < r]
+
+
+def river_with_station(stations):
+    rivers=[]
+    for station in stations:
+        rivers.append(str(station.river))
+    list_river=list(set(rivers))
+    list_river.sort()
+    return list_river
+
+def stations_by_river(stations): #return a dic in form {river:[stationsA, stationB...]}
+    dic_river_stations={}
+    for station in stations:
+        if dic_river_stations.get(station.river)==None: #if the river is not yet in the dic
+            dic_river_stations[station.river]=[station.name]
+        else:
+            dic_river_stations[station.river].append(station.name)
+            dic_river_stations[station.river].sort() #sort by alphabetical order
+    return dic_river_stations
