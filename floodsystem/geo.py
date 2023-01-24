@@ -30,8 +30,15 @@ def stations_by_distance(stations, p):
     station_county_distance=sorted_by_key(station_county_distance, 1) #sort by distance
     return station_county_distance
 
+
+#---------------------------------------------------------------------------------------------------------------
+
+
 def stations_within_radius(stations, centre, r):
     return [station for station in stations if haversine(station.coord,centre) < r]
+
+
+#---------------------------------------------------------------------------------------------------------------
 
 
 def river_with_station(stations):
@@ -42,6 +49,10 @@ def river_with_station(stations):
     list_river.sort()
     return list_river
 
+
+#---------------------------------------------------------------------------------------------------------------
+
+
 def stations_by_river(stations): #return a dic in form {river:[stationsA, stationB...]}
     dic_river_stations={}
     for station in stations:
@@ -51,3 +62,21 @@ def stations_by_river(stations): #return a dic in form {river:[stationsA, statio
             dic_river_stations[station.river].append(station.name)
             dic_river_stations[station.river].sort() #sort by alphabetical order
     return dic_river_stations
+
+
+#---------------------------------------------------------------------------------------------------------------
+
+
+def rivers_by_station_number(stations, N):
+    dic_rivers = {}
+    for station in stations:
+        dic_rivers[station.river] = dic_rivers.get(station.river,0)+1
+    
+    list_rivers = sorted([(river,dic_rivers[river]) for river in dic_rivers],key = lambda x: x[1], reverse = True)
+
+    output = list_rivers[:N]
+    for i in list_rivers[N:]:
+        if i[1] == output[-1][1]:
+            output.append(i)
+    
+    return output

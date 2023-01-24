@@ -3,7 +3,34 @@
 # SPDX-License-Identifier: MIT
 """Unit test for the station module"""
 
-from floodsystem.station import MonitoringStation
+from floodsystem.station import MonitoringStation, inconsistent_typical_range_stations
+
+a = MonitoringStation(
+                station_id=1,
+                measure_id=1,
+                label='e',
+                coord=(52.141965, 0.148004),
+                typical_range=None,
+                river='cc',
+                town='aaa')
+
+b = MonitoringStation(
+                station_id=1,
+                measure_id=1,
+                label='e',
+                coord=(52.141965, 0.148004),
+                typical_range=(0,1),
+                river='cc',
+                town='aaa')
+
+c = MonitoringStation(
+                station_id=1,
+                measure_id=1,
+                label='e',
+                coord=(52.141965, 0.148004),
+                typical_range=(1,0),
+                river='cc',
+                town='aaa')
 
 
 def test_create_monitoring_station():
@@ -25,3 +52,8 @@ def test_create_monitoring_station():
     assert s.typical_range == trange
     assert s.river == river
     assert s.town == town
+
+
+def test_inconsistent_typical_range_stations():
+    assert inconsistent_typical_range_stations([a,b,c]) == [a,c]
+

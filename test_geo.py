@@ -1,7 +1,5 @@
-from floodsystem.geo import stations_within_radius, stations_by_distance
+import floodsystem.geo as g
 from floodsystem.station import MonitoringStation
-from floodsystem.geo import river_with_station
-from floodsystem.geo import stations_by_river
 
 c = MonitoringStation(
                 station_id=1,
@@ -11,6 +9,7 @@ c = MonitoringStation(
                 typical_range=(1, 1),
                 river='aa',
                 town='aaa')
+
 b = MonitoringStation(
                 station_id=1,
                 measure_id=1,
@@ -19,6 +18,7 @@ b = MonitoringStation(
                 typical_range=(1, 1),
                 river='aa',
                 town='aaa')
+
 a = MonitoringStation(
                 station_id=1,
                 measure_id=1,
@@ -27,21 +27,6 @@ a = MonitoringStation(
                 typical_range=(1, 1),
                 river='aa',
                 town='aaa')
-
-def test_sort_station_by_distance(): #the pytest for Task1B
-    station_list_test=[a,b,c]
-    p = (52.2053, 0.1218)
-    print(stations_by_distance(station_list_test,p))
-    assert stations_by_distance(station_list_test,p)[0]==('a', 2.502277543239629)
-    assert stations_by_distance(station_list_test,p)[1]==('c', 7.265704342799649)
-    assert stations_by_distance(station_list_test,p)[2]==('b', 132.5410306597496)
-test_sort_station_by_distance()
-
-def test_stations_within_radius(): #the pytest for Task1C
-    centre = (52.2053, 0.1218)
-    print(set(stations_within_radius([c,b,a],centre,10)) == {a,c})
-test_stations_within_radius()
-
 
 d = MonitoringStation(
                 station_id=1,
@@ -61,12 +46,37 @@ e = MonitoringStation(
                 river='cc',
                 town='aaa')
 
+f = MonitoringStation(
+                station_id=1,
+                measure_id=1,
+                label='e',
+                coord=(52.141965, 0.148004),
+                typical_range=(1, 1),
+                river='dd',
+                town='aaa')
+
+def test_sort_station_by_distance(): #the pytest for Task1B
+    station_list_test=[a,b,c]
+    p = (52.2053, 0.1218)
+    print(g.stations_by_distance(station_list_test,p))
+    assert g.stations_by_distance(station_list_test,p)[0]==('a', 2.502277543239629)
+    assert g.stations_by_distance(station_list_test,p)[1]==('c', 7.265704342799649)
+    assert g.stations_by_distance(station_list_test,p)[2]==('b', 132.5410306597496)
+
+
+def test_stations_within_radius(): #the pytest for Task1C
+    centre = (52.2053, 0.1218)
+    print(set(g.stations_within_radius([c,b,a],centre,10)) == {a,c})
+
+
 def test_river_with_station():
-    assert (river_with_station([a,b,c,d,e]))==['aa','cc']
-test_river_with_station()
+    assert (g.river_with_station([a,b,c,d,e]))==['aa','cc']
+
 
 def test_stations_by_river():
-    assert stations_by_river([a,b,c,d,e])['cc']==['e']
-    assert stations_by_river([a,b,c,d,e])['aa']==['a','b','c','d']
-test_stations_by_river()
-    
+    assert g.stations_by_river([a,b,c,d,e])['cc']==['e']
+    assert g.stations_by_river([a,b,c,d,e])['aa']==['a','b','c','d']
+
+
+def test_rivers_by_station_number():
+    assert g.rivers_by_station_number([a,b,c,d,e,f],2)==[('aa',4),('cc',1),('dd',1)]
