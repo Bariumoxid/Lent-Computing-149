@@ -35,7 +35,6 @@ def test_stations_level_over_threshold():
     b.latest_level = 3
     assert stations_level_over_threshold([a,b,c],0.8) == [(b,2.0),(a,1.0)]
 
-test_stations_level_over_threshold()
 
 def test_stations_highest_rel_level():
     a.latest_level = 2
