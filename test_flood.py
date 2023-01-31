@@ -46,7 +46,7 @@ def test_stations_highest_rel_level():
             assert i==['b', 2.0]
         elif it==2:
             assert i==['c', 1.5]
-        elif it==2:
+        elif it==3:
             assert i==['a', 1.0]
         it+=1
 test_stations_highest_rel_level()
