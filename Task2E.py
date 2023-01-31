@@ -11,13 +11,17 @@ def run():
     dict={}
     for station in stations:
         dict[station.name]=station
+
+
     for items in stations_highest_rel_level(stations,N+1):
         station_name=items[0]
+        
         if station_name=="Whaddon":
             continue
+        
         station=dict[station_name]
-        outcome1,outcome2=fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=dt)) 
-        plot_water_levels(station,10,outcome2)
+        dates,outcome2=fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=dt)) 
+        plot_water_levels(station,dates,outcome2)
 
 if __name__ == "__main__":
     print("*** Task 2E: CUED Part IA Flood Warning System ***")
