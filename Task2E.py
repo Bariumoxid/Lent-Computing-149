@@ -15,11 +15,12 @@ def run():
 
     for items in stations_highest_rel_level(stations,N+1):
         station_name=items[0]
-        
-        if station_name=="Whaddon":
-            continue
-        
+                
         station=dict[station_name]
+        try:    
+            dates,levels=fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=dt)) 
+        except:
+            continue
         dates,outcome2=fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=dt)) 
         plot_water_levels(station,dates,outcome2)
 
